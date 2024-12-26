@@ -14,7 +14,7 @@
 <body class="bg-gray-900 text-white font-sans">
 
     <header class="flex justify-between items-center p-6">
-        <nav class="ml-auto space-x-4">
+        <nav class="ml-auto space-x-4 underline-animation">
             <a class="text-white hover:text-indigo-400" href="https://github.com/SergioQuirogaB">GitHub</a>
             <a class="text-white hover:text-indigo-400" href="https://www.linkedin.com/in/sergio-quiroga-softwaredev">Linkedin</a>
         </nav>
@@ -137,9 +137,45 @@
         </div>
     </footer>
 
+    <!-- Botón para subir -->
+    <button id="back-to-top" class="fixed bottom-6 right-3 bg-purple-600 text-white p-3 rounded-full shadow-lg hover:bg-purple-700 transition-transform transform scale-90 sm:block hidden">
+        <i class="fas fa-chevron-up"></i> <!-- Icono de flecha hacia arriba -->
+    </button>
+
+    <!-- Sonido del ascensor -->
+    <audio id="elevator-sound" src="imgs/elevador.mp3" preload="auto"></audio>
+
 <script>
-    AOS.init(); //Animaciones al hacer scroll
-    document.getElementById('year').textContent = new Date().getFullYear(); //Tomar el año actual
+    AOS.init(); // Animaciones al hacer scroll
+    document.getElementById('year').textContent = new Date().getFullYear(); // Tomar el año actual
+
+    // Mostrar el botón de "subir" cuando se haga scroll
+    const backToTopButton = document.getElementById('back-to-top');
+    const elevatorSound = document.getElementById('elevator-sound'); // El sonido del ascensor
+
+    // Mostrar el botón al hacer scroll
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) { // Si el scroll es mayor a 200px
+            backToTopButton.classList.remove('hidden');
+        } else {
+            backToTopButton.classList.add('hidden');
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        // Reproducir el sonido de ascensor
+        elevatorSound.play();
+
+        // Hacer scroll muy lento
+        let scrollInterval = setInterval(() => {
+            window.scrollBy(0, -5); 
+            
+            // Detiene cuando llega al tope
+            if (window.scrollY <= 0) {
+                clearInterval(scrollInterval);
+            }
+        }, 5); 
+    });
 </script>
 
 </body>
